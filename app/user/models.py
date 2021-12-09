@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from .database import Base
+from ..database import Base
 
 
 class User(Base):
@@ -12,9 +12,10 @@ class User(Base):
     email = Column(String, unique=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
-    section_code = Column(String, ForeignKey("sections.code"))
+    section_code = Column(String, ForeignKey("fast.sections.code"))
 
     section = relationship("Section", back_populates="users")
+    __table_args__ = {'schema':'fast'}
 
 
 class Section(Base):
@@ -26,3 +27,4 @@ class Section(Base):
     division = Column(String)
 
     users = relationship("User", back_populates="section")
+    __table_args__ = {'schema':'fast'}
