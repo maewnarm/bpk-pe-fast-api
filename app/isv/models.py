@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String, Time, Date, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey,DateTime
 from sqlalchemy.orm import relationship
 # from sqlalchemy_utils import ChoiceType
 
@@ -9,8 +9,7 @@ class Operation_record(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     machine_id = Column(Integer, ForeignKey("machines.id"))
-    date_ = Column(Date)
-    time_ = Column(Time)
+    datetime_ = Column(DateTime)
     signal = Column(Integer)
     value = Column(Integer)
     detail = Column(String,default="")

@@ -8,20 +8,19 @@ def get_all_record(db: Session):
     return db.query(models.Operation_record).all()
 
 
-def get_records(db: Session, param: schemas.Isv):
+def get_records(db: Session, param: schemas.IsvRead):
     machinesid = param.machine_id.split(",")
     machinesid = [int(i) for i in machinesid]
+    print(param)
     return (
         db.query(models.Operation_record)
         .filter(
             models.Operation_record.machine_id.in_(machinesid),
-            models.Operation_record.date_.between(param.date_start, param.date_end),
-            models.Operation_record.time_.between(param.time_start, param.time_end),
+            models.Operation_record.datetime_.between(param.datetime_start, param.datetime_end),
         )
         .order_by(
             models.Operation_record.machine_id,
-            models.Operation_record.date_,
-            models.Operation_record.time_,
+            models.Operation_record.datetime_,
         )
         .all()
     )
